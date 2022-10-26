@@ -1,0 +1,5 @@
+myObj.addEncodedQuery('where clauses');
+
+// example where clause: 
+
+priority=1^assignment_group=d625dccec0a8016700a222a0f7900d06

@@ -1,0 +1,5 @@
+var myObj = new GlideRecord('incident');
+myObj.addQuery('caller_id'.current.caller_id);
+myObj.query();
+var retRows = myObj.getRowCount();
+gs.info('Returned number of rows = ' + retRows);

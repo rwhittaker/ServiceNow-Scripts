@@ -1,0 +1,12 @@
+GlideAggregate Example
+
+var count new GlideAggregate('incident');
+count.addQuery('caller_id',current.caller_id);
+count.addAggregate('COUNT');
+    count.query();
+    var incidents = 0;
+    if (count.next()){
+       incidents = count.getAggregate('COUNT');
+}
+
+gs.info("Returned number of rows = " + incidents);

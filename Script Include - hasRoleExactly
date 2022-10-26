@@ -1,0 +1,46 @@
+function hasRoleExactly(userSysID, roleString){
+	try {
+		// Create an object of user roles
+		var roleGr = new GlideRecord("sys_user_role");
+		// Get the user role that has been passed via roleString
+		if (roleGr.get('name',roleString)) {
+			// Get the sys_id of the role we want to look at
+			var role = roleGr.getValue('sys_id');
+			
+			// Get records for the user passed via the userSysID parm
+			var gr = GlideRecord("sys_user_has_role");
+			gr.addQuery("user",userSysID);
+			// Filer to he role specified above
+			gr.addQuery("role",role);
+			gr.query();
+			// If we find an entry for the role on the user has role table, return true.
+			if (gr.next()) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	} catch(error) {
+		gs.error("Error in script include hasRoleExactly: " + error);
+		
+	}
+}
+
+// example call from a BR
+
+(function executeRule(current, previous /*null when async*/ ) {
+
+    try {
+
+        var admin = hasRoleExactly(gs.getUserID(), 'admin');
+        var itil = hasRoleExactly(gs.getUserID(), 'itil');
+
+        var debug = "User has role Admin? " + admin + " | User has role itil? " + itil;
+        gs.info("DEBUG: " + debug);
+
+
+    } catch (error) {
+        gs.error("Error in Business Rule Lab 8.1A Script Include logging: " + error);
+    }
+
+})(current, previous);

@@ -1,0 +1,20 @@
+// Creates a list of incident numbers and prints them to a gs.info bubble at the top of the incident list.
+// Trigger config is Incident | After - Insert/Update
+
+(function executeRule(current, previous /*null when async*/ ) {
+
+    var sapIncs = new GlideRecord("incident");
+	sapIncs.addActiveQuery();
+    sapIncs.addQuery("short_description","CONTAINS","SAP");
+    sapIncs.query();
+	
+	// Create a variable to add incident numbers to.
+	var myLog = "";
+	
+    while (sapIncs.next()) {
+	myLog += sapIncs.number + ", "; // Append inc numbers to list
+    }
+
+	gs.addInfoMessage("These records are active SAP Incidents:" + myLog);
+
+})(current, previous);

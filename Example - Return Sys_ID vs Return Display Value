@@ -1,0 +1,14 @@
+// 1. Create an object to store rows from a table
+var myObj = new GlideRecord('incident');
+
+// 2. Build query
+myObj.addQuery('number','=','INC0009009');
+
+// 3. Execute query 
+myObj.query();
+
+// 4. Process returned records
+while(myObj.next()){
+  gs.log(myObj.getValue('caller_id')); // returns the sys_id
+  gs.info(myObj.getDisplayValue('caller_id')); // returns the display value i.e. name
+}

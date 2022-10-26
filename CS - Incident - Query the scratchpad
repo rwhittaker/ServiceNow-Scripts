@@ -1,0 +1,12 @@
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    if (isLoading || newValue === '') {
+        return;
+    }
+	if (oldValue > 5 && newValue <= 5){
+		var answer = confirm("This incident was resolved by " + g_scratchpad.resolvedByFirstName + " " + g_scratchpad.resolvedByLastName + " and has been reopened " + g_scratchpad.reopenCount + " times.\n\nAre you sure you want to reopen it?");
+		
+		if (answer == false){
+			g_form.setValue('state', oldValue);
+		}
+	}
+}

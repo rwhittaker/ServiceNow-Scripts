@@ -1,0 +1,10 @@
+function onCondition() {
+    if (g_form.getValue('close_code') == '' || g_form.getValue('close_notes') == '' || g_form.getValue('resolved_by') == '') {
+        g_form.addInfoMessage("REMINDER: Populate the Resolution Information fields before saving an Incident in a Resolved or Closed State");
+    }
+}
+
+// this clears the messages if the user reverts the state back to any of the other states
+function onCondition() {
+ g_form.clearMessages();
+}

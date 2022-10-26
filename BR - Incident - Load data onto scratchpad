@@ -1,0 +1,12 @@
+// Using a 'display' BR.
+(function executeRule(current, previous /*null when async*/) {
+
+	g_scratchpad.resolvedByFirstName = current.resolved_by.first_name;
+	g_scratchpad.resolvedByLastName = current.resolved_by.last_name;
+	if(current.re_opencount.nil()){
+		g_scratchpad.reopenCount = "0";
+	} else {
+		g_scratchpad.reopenCount = current.reopen_count;
+	}
+
+})(current, previous);

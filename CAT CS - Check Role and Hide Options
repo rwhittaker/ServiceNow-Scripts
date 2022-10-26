@@ -1,0 +1,8 @@
+function onLoad() {
+	// Checks to see if user has the itil_admin role. 
+	// If they don't, hide some form options. 
+    if(!g_user.hasRoleExactly('itil_admin')) {
+	g_form.removeOption('pack_type','cym3');
+	g_form.removeOption('pack_type','cym6')
+	}    
+}

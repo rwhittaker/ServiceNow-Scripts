@@ -1,0 +1,10 @@
+// Create a sys_user object
+var vipUsers = new GlideRecord("sys_user");
+// Filter the object to just our VIPs
+vipUsers.addEncodedQuery("titleLIKEVice^ORtitleLIKEVP^ORtitleLIKEChief");
+vipUsers.query();
+while (vipUsers.next()) {
+	// Give the users VIP status
+	vipUsers.vip = "true";
+	vipUsers.update();
+}

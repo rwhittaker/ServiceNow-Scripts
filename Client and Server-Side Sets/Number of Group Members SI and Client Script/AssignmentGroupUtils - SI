@@ -1,0 +1,26 @@
+var AssignmentGroupUtils = Class.create();
+AssignmentGroupUtils.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+
+    // this is the function we'll call from a Client Script
+	countGroupMembers: function() {
+		var grpName = ""; // variable to store the group name
+		var message = "There are no members in this Assignment Group"; // default message
+		var groupID = this.getParameter('sysparm_group_id'); // passed from an addParam on the client script
+		
+        // create a glide record object on the group member table
+		var grpMems = new GlideRecord('sys_user_grmember'); 
+		grpMems.addQuery('group.sys_id', groupID);
+		grpMems.query();
+		
+        // if we find members for the group that's been set on the form, do stuff
+		if (grpMems.next()){
+			grpName = grpMems.getDisplayValue('group');
+		}
+		if (grpName != "") {
+			message = "There are " + grpMems.getRowCount() + " members in the " + grpName + " group";
+		}
+		return message;
+	},
+	
+    type: 'AssignmentGroupUtils'
+});

@@ -1,0 +1,23 @@
+var Callerlncidents = Classcreate(); 
+Callerlncidents.prototype = Object. extendsObject(AbstractAjaxProcessor, { 
+
+    getCallersIncs: function(){ 
+        var incArray= []; // Create an empty array 
+        var callersRecords = new GlideRecord('incident'); 
+        callersRecords.addQuery('caller_id',this.getParameter('sysparm_callerID'));
+        callersRecords.query(); 
+
+        while(callersRecords.next()) { 
+        //Build the array of objects. One object for each glide record. 
+        var incDetails = {}; 
+        incDetails.number = callersRecords.number_toString(); 
+        incDetails.priority = callersRecords.priority.getDisplayValue(); 
+        incDetails.shortDesc = callersRecords.short_description.toStnng(); 
+        incArray.push(incDetails); 
+        }
+
+    //Create a string from a JSON object and pass it back to the calling script 
+    return JSON.stringify(incArray); 
+    },
+type: 'Callerlncidents' 
+});

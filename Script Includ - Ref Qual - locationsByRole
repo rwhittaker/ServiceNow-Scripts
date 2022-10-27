@@ -1,0 +1,36 @@
+var LocationsByRole = Class.create();
+LocationsByRole.prototype = {
+    initialize: function() {
+		// get logged-in user's sys_user record
+		this.loggedInUser = new GlideRecord('sys_user');
+		this.loggedInUser.get(gs.getUserID());
+    },
+	
+	forCMDB: function() {
+		var refQual = ""; // create empty string
+		if(gs.hasRole('admin')){
+			// Admins may assign CIs to All locations. ^EQ = End Query... no docs found.
+			refQual += "^EQ";
+		}
+		if (gs.hasRole('asset_mgr_local')) {
+			// Users with this role may assign CIs to local locations
+			refQual += "parent=" + this.loggedInUser.location.parent + "^EQ";
+		}
+		if (gs.hasRole('asset_mgr_corporate')) {
+			// Users with this role may assign CIS to corporate locations
+			refQual += "company=" + this.loggedInUser.location.company + "^EQ";
+		}
+		return refQual;
+	},
+
+    type: 'LocationsByRole'
+};
+
+// to call this from a reference qualifier:
+// 1 dicitonary entry for the field in question
+// 2 advanced view
+// 3 advanced ref qualifier
+
+javascript: new LocationsByRole().forCMDB();
+// if the record is in a different scope... to get to global do
+javascript: new global.LocationsByRole().forCMDB(); 

@@ -2,9 +2,21 @@
 	2. Create an object
 	3. Populate the object with Methods and other Props 
 */
-var HelloWorld = Class.create();
-HelloWorld.prototype = {
+var UserProfileUtils = Class.create();
+UserProfileUtils.prototype = {
     initialize: function() {
+        this.userRecord = new GlideRecord('sys_user');
+        this.userRecord.get(gs.getUserID());
 },
-   type 'HelloWorld'
+
+    getUserFullName: function() {
+        return this.userRecord.getDisplayValue('name');
+    },
+
+    getUserDept: function () {
+        return this.userRecord.getDisplayValue('department');
+
+    },
+
+   type 'UserProfileUtils';
 };

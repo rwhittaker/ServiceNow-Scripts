@@ -1,0 +1,9 @@
+var HelloWorld = Class.create();
+HelloWorld.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+
+	alertGreeting: function(){
+		return "Hello" + this.getParameter('sysparm_user_name') + "!";
+	},
+	
+    type: 'HelloWorld'
+})

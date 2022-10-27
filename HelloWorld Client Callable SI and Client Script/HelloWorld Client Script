@@ -1,0 +1,13 @@
+function onLoad() {
+	// Extend GlideAjax SI 'HelloWorld'
+	var ga = new GlideAjax('HelloWorld');
+	ga.addParam('sysparm_name', 'alertGreeting');
+	ga.addParam('sysparm_user_name', 'Ryan');
+	ga.getXML(HelloWorldParse); // Call the callback. 
+	
+	// Feed this the response to the call ^^^ as in the result of getXML.
+	function HelloWorldParse(response) {
+		var answerFromXML = response.responseXML.documentElement.getAttribute('answer');
+		alert(answerFromXML);
+	}	
+}

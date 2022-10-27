@@ -1,0 +1,10 @@
+/* 	1. Create a new class
+	2. Create an object
+	3. Populate the object with Methods and other Props 
+*/
+var HelloWorld = Class.create();
+HelloWorld.prototype = {
+    initialize: function() {
+},
+   type 'HelloWorld'
+};

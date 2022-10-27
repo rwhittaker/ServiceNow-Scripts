@@ -1,0 +1,22 @@
+var AssignmentGroupUtils = Class.create();
+AssignmentGroupUtils.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+
+	assignAnalyst: function() {
+		var groupID = this.getParameter('sysparm_group_id');
+		var membersArray = [];
+		
+		var membersGR = new GlideRecord('sys_user_grmember');
+		membersGR.addQuery('group.sys_id',groupID);
+		membersGR.query();
+		
+		while(membersGR.next()) {
+			var member = {};
+			member.sys_id = membersGR.user.sys_id.toString();
+			member.name = membersGR.user.getDisplayValue();
+			membersArray.push(member);
+		}
+		return JSON.stringify(membersArray);
+	},
+	
+    type: 'AssignmentGroupUtils'
+});

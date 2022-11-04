@@ -1,4 +1,4 @@
-// Credit to Sebastien Martin on LinkedIN for the script.
+// Credit to Sebastien Martin for the script from his LinkedIn post.
 // These creates a JSON object of a table structure. Use in combination with a JSON viewer e.g. https://jsoncrack.com/editor to look at complex table hierarchies. 
 // SCRIPT TO BUILD THE TABLE HIERARCHY
 var table_GR = new GlideRecord('sys_db_object');

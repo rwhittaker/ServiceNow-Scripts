@@ -1,0 +1,45 @@
+// SCRIPT TO BUILD THE TABLE HIERARCHY
+var table_GR = new GlideRecord('sys_db_object');
+table_GR.get('name', 'task'); // replace 'task' by any table you want
+
+var jsonArrayObj = getTableHierarchy(table_GR.getValue('sys_id'));
+
+var parentTableObj = {
+    "label": table_GR.getValue('label') + '',
+    "name": table_GR.getValue('name') + '',
+    "sys_id": table_GR.getValue('sys_id') + '',
+    "is_extendable": table_GR.is_extendable + '',
+"extended_by": []
+  };
+
+parentTableObj.extended_by.push(jsonArrayObj);
+
+gs.info(JSON.stringify(parentTableObj));
+
+// Get the table Hierarchy as a JSON Array Object
+function getTableHierarchy(tableSysId /* Table GlideRecord */ ) {
+  var table = new GlideRecord('sys_db_object');
+  table.addQuery('super_class', tableSysId); // Extends table
+  table.orderBy('label');
+  table.query();
+
+  var tableArray = [];
+
+  while (table.next()) {
+    var tableObj = {};
+    tableObj.label = table.getValue('label') + '';
+    tableObj.name = table.getValue('name') + '';
+    tableObj.parent = table.super_class.name + '';
+    tableObj.sys_id = table.sys_id + '';
+    tableObj.is_extendable = table.is_extendable + '';
+
+    if (table.is_extendable == true) {
+      tableObj.extended_by = [];
+      tableObj.extended_by.push(getTableHierarchy(table.getValue('sys_id')));
+    }
+
+    tableArray.push(tableObj);   
+  }
+
+  return tableArray;
+}
